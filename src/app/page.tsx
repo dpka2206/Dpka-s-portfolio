@@ -5,34 +5,26 @@ export default function Home() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  // Custom cursor state for exact mouse tracking
+  
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
-  // Scramble text state
   const [scrambleText, setScrambleText] = useState("Dpka");
   const origText = "Dpka";
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
   const scrambleIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Scroll tracked for reactive marquee
   const [scrollY, setScrollY] = useState(0);
-
-  // Visible sections for slam animations
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    // 1. Trigger Curtain Reveal on mount
     setTimeout(() => setIsLoaded(true), 100);
 
-    // 2. Track scrolling
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // 3. Track Intersection for Slam Animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -43,12 +35,11 @@ export default function Home() {
 
     document.querySelectorAll('.animate-slam').forEach(el => observer.observe(el));
 
-    // 4. Custom Cursor tracking
     if (window.matchMedia("(pointer: fine)").matches) {
       const handleMouseMove = (e: MouseEvent) => {
         setMousePos({ x: e.clientX, y: e.clientY });
       };
-
+      
       const handleMouseOver = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         if (target.closest('a') || target.closest('button') || target.closest('.cursor-pointer') || target.closest('[href]')) {
@@ -93,7 +84,7 @@ export default function Home() {
         return chars[Math.floor(Math.random() * chars.length)];
       }).join(""));
       if (iter >= origText.length) clearInterval(scrambleIntervalRef.current as NodeJS.Timeout);
-      iter += 1 / 3;
+      iter += 1/3;
     }, 40);
   };
 
@@ -101,15 +92,13 @@ export default function Home() {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    // Add a subtle magnetic translation and rotation
     e.currentTarget.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) rotate(${x * 0.05}deg)`;
   };
-
+  
   const handleMagneticLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.style.transform = `translate(0px, 0px) rotate(0deg)`;
   };
 
-  // Helper for Slam Animation Classes (takes an ID from mapping)
   const getSlamClass = (id: string, hoverClasses: string, initRotate: string = "rotate-[5deg]") => {
     const isVisible = visibleItems[id];
     return `animate-slam transition-all duration-[800ms] ease-[cubic-bezier(0.1,1,0.2,1)] ${isVisible ? `opacity-100 translate-y-0 rotate-0 ${hoverClasses}` : `opacity-0 translate-y-24 pointer-events-none ${initRotate}`}`;
@@ -123,12 +112,10 @@ export default function Home() {
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}} />
 
-      {/* Curtain Page Reveal */}
       <div className={`fixed inset-0 z-[999999] bg-gaude-black transition-transform duration-[1500ms] ease-[cubic-bezier(0.85,0,0.15,1)] ${isLoaded ? '-translate-y-[120%]' : 'translate-y-0'} flex flex-col items-center justify-center pointer-events-none`}>
         <div className="font-archivo text-white text-[10vw] uppercase tracking-tighter opacity-10 blur-sm">Loading...</div>
       </div>
 
-      {/* Custom Cursor */}
       <div
         className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[99999] mix-blend-difference hidden md:flex items-center justify-center transition-transform duration-75 ease-out"
         style={{ transform: `translate(${mousePos.x - 16}px, ${mousePos.y - 16}px)` }}
@@ -136,9 +123,8 @@ export default function Home() {
         <div className={`bg-white rounded-full transition-all duration-300 ${isHovering ? 'w-10 h-10 opacity-70' : 'w-4 h-4 opacity-100'}`}></div>
       </div>
 
-      {/* FLOATING TOP-LEFT NAVIGATION BUTTON (Magnetic) */}
-      <button
-        onClick={() => setIsNavOpen(!isNavOpen)}
+      <button 
+        onClick={() => setIsNavOpen(!isNavOpen)} 
         onMouseMove={handleMagneticMove}
         onMouseLeave={handleMagneticLeave}
         className="fixed top-16 left-4 md:top-20 md:left-8 z-[200] bg-white border-4 border-gaude-black shadow-[4px_4px_0_0_#0a0a0a] transition-transform duration-100 ease-out p-3 md:p-4 cursor-pointer text-gaude-black flex items-center justify-center hover:shadow-[8px_8px_0_0_#0a0a0a]"
@@ -151,8 +137,7 @@ export default function Home() {
         )}
       </button>
 
-      {/* EXPANDABLE NAVIGATION MENU */}
-      <nav
+      <nav 
         className={`fixed top-[5.5rem] left-4 md:top-[7.5rem] md:left-8 z-[150] bg-white border-4 border-gaude-black shadow-[8px_8px_0_0_#0a0a0a] flex flex-col transition-all duration-300 origin-top-left overflow-hidden ${isNavOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-75 opacity-0 pointer-events-none'}`}
       >
         <a href="#hero" onClick={(e) => scrollToSection(e, 'hero')} className="font-archivo uppercase text-gaude-black text-sm md:text-xl px-6 md:px-8 py-3 md:py-4 hover:bg-gaude-orange hover:text-white transition-colors cursor-pointer border-b-2 border-gaude-black">Home</a>
@@ -166,11 +151,9 @@ export default function Home() {
 
       <main className="relative w-full overflow-clip">
 
-        {/* SECTION 1: HERO */}
         <section id="hero" className="sticky top-0 h-[100svh] w-full bg-gaude-orange flex flex-col items-center p-0 z-10 overflow-hidden relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent pointer-events-none"></div>
 
-          {/* Animated Marquee Header */}
           <header className="w-full border-b-4 border-gaude-black bg-white/10 backdrop-blur-md text-gaude-black font-inter text-sm md:text-xl font-black mt-0 overflow-hidden py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)] relative z-20">
             <div className="flex whitespace-nowrap will-change-transform ease-out transition-transform duration-100" style={{ transform: `translateX(${-scrollY * 1.5}px)` }}>
               <div className="flex gap-16 px-8 items-center uppercase tracking-widest animate-marquee min-w-max">
@@ -192,19 +175,17 @@ export default function Home() {
 
           <div className="flex-1 w-full flex items-center justify-center pb-12 relative z-10">
             <h1 onMouseEnter={handleScrambleStart}
-              className="font-syne text-[clamp(6rem,18vw,26rem)] leading-none tracking-tighter drop-shadow-2xl select-none 
+                className="font-syne text-[clamp(6rem,18vw,26rem)] leading-none tracking-tighter drop-shadow-2xl select-none 
                          bg-clip-text text-transparent bg-[linear-gradient(to_right,#ffffff,#ffedcc,#ffffff)] bg-[length:200%_auto] animate-[gradient-x_4s_linear_infinite] cursor-crosshair">
               {scrambleText}
             </h1>
           </div>
         </section>
 
-        {/* SECTION 2: EXPERIENCE CARDS */}
         <section id="experience" className="sticky top-0 h-[100svh] w-full bg-gaude-black flex items-center justify-center p-8 shadow-[0_-20px_40px_rgba(0,0,0,0.3)] z-20 overflow-hidden relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-gaude-purple/10 to-transparent animate-[pulse-glow_6s_ease-in-out_infinite] pointer-events-none"></div>
 
           <div className="relative w-full max-w-6xl aspect-square md:aspect-[21/9]">
-            {/* Top White Card - Backend Intern */}
             <div className={`absolute top-[4%] md:top-[5%] left-[2%] md:left-[12%] w-[90%] md:w-[48%] ${activeCard === 1 ? 'z-50' : 'z-10'}`}>
               <div
                 onClick={() => setActiveCard(1)}
@@ -224,7 +205,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Left Purple Card - Co-Founder */}
             <div className={`absolute top-[38%] md:top-[45%] left-0 md:left-[5%] w-[85%] md:w-[42%] ${activeCard === 2 ? 'z-50' : 'z-20'}`}>
               <div
                 onClick={() => setActiveCard(2)}
@@ -250,7 +230,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Orange Card - GenAI Club */}
             <div className={`absolute top-[55%] md:top-[25%] right-0 md:right-[5%] w-[85%] md:w-[42%] ${activeCard === 3 ? 'z-50' : 'z-30'}`}>
               <div
                 onClick={() => setActiveCard(3)}
@@ -273,7 +252,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 2.5: ABOUT */}
         <section id="about" className="sticky top-0 min-h-[100svh] w-full bg-white flex flex-col justify-center p-8 md:p-16 shadow-[0_-20px_40px_rgba(0,0,0,0.3)] z-[25] overflow-y-auto relative">
           <div className="absolute top-[10%] left-[10%] w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-gaude-purple/20 rounded-full blur-[100px] animate-[pulse-glow_8s_ease-in-out_infinite] pointer-events-none"></div>
           <div className="absolute bottom-[20%] right-[10%] w-[200px] h-[200px] md:w-[400px] md:h-[400px] bg-gaude-orange/15 rounded-full blur-[100px] animate-[pulse-glow_6s_ease-in-out_infinite] pointer-events-none"></div>
@@ -318,9 +296,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 3: TEXT */}
         <section className="sticky top-0 h-[100svh] w-full bg-gaude-orange flex flex-col justify-center p-8 md:p-16 shadow-[0_-20px_40px_rgba(0,0,0,0.3)] z-30 relative overflow-hidden">
-          {/* Animated grid overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,#000_60%,transparent_100%)] pointer-events-none"></div>
 
           <div className="w-full max-w-7xl mx-auto flex flex-col justify-between h-full py-12 relative z-10">
@@ -335,13 +311,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 4: SKILLS & SYSTEMS BENTO GRID */}
         <section id="skills" className="relative min-h-[100svh] w-full bg-gaude-black py-16 px-4 md:px-8 z-40">
           <div className="w-full max-w-7xl mx-auto flex flex-col justify-center h-full">
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-8 pt-12 pb-12">
 
-              {/* 1. DESIGN SYSTEMS */}
               <div id="slam-1" className={`bg-gaude-purple border-4 border-white p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(195,164,246,0.5)] lg:col-span-2 flex flex-col justify-between cursor-default group ${getSlamClass('slam-1', 'hover:-translate-y-2', 'rotate-[-5deg]')}`}>
                 <div>
                   <div className="mb-4 group-hover:scale-110 transition-transform origin-left">
@@ -364,8 +338,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. FRONTEND + MOBILE */}
-              <div id="slam-2" className={`bg-gaude-orange border-4 border-white p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(255,78,0,0.5)] lg:col-span-4 flex flex-col justify-between cursor-default group ${getSlamClass('slam-2', 'hover:-translate-y-2', 'rotate-[3deg]')}`} style={{ transitionDelay: '100ms' }}>
+              <div id="slam-2" className={`bg-gaude-orange border-4 border-white p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(255,78,0,0.5)] lg:col-span-4 flex flex-col justify-between cursor-default group ${getSlamClass('slam-2', 'hover:-translate-y-2', 'rotate-[3deg]')}`} style={{transitionDelay: '100ms'}}>
                 <div>
                   <div className="mb-4 group-hover:scale-110 transition-transform origin-left">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 text-white">
@@ -388,8 +361,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 3. BACKEND SYSTEMS */}
-              <div id="slam-3" className={`bg-[#36df93] border-4 border-white p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(47,223,146,0.5)] lg:col-span-3 flex flex-col justify-between cursor-default group ${getSlamClass('slam-3', 'hover:-translate-y-2', 'rotate-[-2deg]')}`} style={{ transitionDelay: '100ms' }}>
+              <div id="slam-3" className={`bg-[#36df93] border-4 border-white p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(47,223,146,0.5)] lg:col-span-3 flex flex-col justify-between cursor-default group ${getSlamClass('slam-3', 'hover:-translate-y-2', 'rotate-[-2deg]')}`} style={{transitionDelay: '100ms'}}>
                 <div>
                   <div className="mb-4 group-hover:scale-110 transition-transform origin-left">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 text-gaude-black">
@@ -412,8 +384,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 4. GEN AI + FUTURE TECH */}
-              <div id="slam-4" className={`bg-white border-4 border-gaude-black p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(255,255,255,0.3)] lg:col-span-3 flex flex-col justify-between cursor-default group ${getSlamClass('slam-4', 'hover:-translate-y-2', 'rotate-[4deg]')}`} style={{ transitionDelay: '200ms' }}>
+              <div id="slam-4" className={`bg-white border-4 border-gaude-black p-6 md:p-8 shadow-xl hover:shadow-[0_0_50px_rgba(255,255,255,0.3)] lg:col-span-3 flex flex-col justify-between cursor-default group ${getSlamClass('slam-4', 'hover:-translate-y-2', 'rotate-[4deg]')}`} style={{transitionDelay: '200ms'}}>
                 <div>
                   <div className="mb-4 group-hover:scale-110 transition-transform origin-left">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 text-gaude-black">
@@ -438,8 +409,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 5. UNFAIR ADVANTAGE */}
-              <div id="slam-5" className={`bg-[#ffa5d8] border-4 border-white p-6 md:p-10 shadow-xl hover:shadow-[0_0_50px_rgba(252,165,204,0.5)] lg:col-span-6 flex flex-col md:flex-row md:items-end justify-between gap-8 cursor-default group overflow-hidden relative ${getSlamClass('slam-5', 'hover:-translate-y-2', 'rotate-[-3deg]')}`} style={{ transitionDelay: '150ms' }}>
+              <div id="slam-5" className={`bg-[#ffa5d8] border-4 border-white p-6 md:p-10 shadow-xl hover:shadow-[0_0_50px_rgba(252,165,204,0.5)] lg:col-span-6 flex flex-col md:flex-row md:items-end justify-between gap-8 cursor-default group overflow-hidden relative ${getSlamClass('slam-5', 'hover:-translate-y-2', 'rotate-[-3deg]')}`} style={{transitionDelay: '150ms'}}>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/30 rounded-full blur-[80px] group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
 
                 <div className="flex-1 relative z-10">
@@ -464,7 +434,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 4.5: ACADEMICS (Tabular Brutalist) */}
         <section id="academics" className="relative w-full bg-gaude-black flex flex-col py-24 md:py-32 px-6 md:px-12 z-[45] border-y-4 border-gaude-black text-white">
           <div className="w-full max-w-6xl mx-auto flex flex-col">
 
@@ -475,7 +444,6 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col">
-              {/* Row 1: BITS Pilani */}
               <div id="slam-aca-1" className={`flex flex-col md:flex-row justify-between md:items-center gap-6 py-8 border-b border-white/10 hover:bg-white/5 transition-colors group px-4 ${getSlamClass('slam-aca-1', 'opacity-100', 'rotate-[0deg]')}`}>
                 <div className="flex-1">
                   <h3 className="font-syne text-2xl md:text-3xl uppercase font-black mb-2 text-white group-hover:text-gaude-purple transition-colors">B.Sc. Computer Science</h3>
@@ -492,8 +460,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Row 2: NIAT */}
-              <div id="slam-aca-2" className={`flex flex-col md:flex-row justify-between md:items-center gap-6 py-8 border-b border-white/10 hover:bg-white/5 transition-colors group px-4 ${getSlamClass('slam-aca-2', 'opacity-100', 'rotate-[0deg]')}`} style={{ transitionDelay: '100ms' }}>
+              <div id="slam-aca-2" className={`flex flex-col md:flex-row justify-between md:items-center gap-6 py-8 border-b border-white/10 hover:bg-white/5 transition-colors group px-4 ${getSlamClass('slam-aca-2', 'opacity-100', 'rotate-[0deg]')}`} style={{transitionDelay: '100ms'}}>
                 <div className="flex-1">
                   <h3 className="font-syne text-2xl md:text-3xl uppercase font-black mb-2 text-white group-hover:text-gaude-orange transition-colors">NIAT</h3>
                   <p className="font-inter text-sm md:text-base text-white/50 max-w-xl">
@@ -508,8 +475,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Row 3: Narayana */}
-              <div id="slam-aca-3" className={`flex flex-col md:flex-row justify-between md:items-center gap-6 py-8 border-b border-white/10 hover:bg-white/5 transition-colors group px-4 ${getSlamClass('slam-aca-3', 'opacity-100', 'rotate-[0deg]')}`} style={{ transitionDelay: '200ms' }}>
+              <div id="slam-aca-3" className={`flex flex-col md:flex-row justify-between md:items-center gap-6 py-8 border-b border-white/10 hover:bg-white/5 transition-colors group px-4 ${getSlamClass('slam-aca-3', 'opacity-100', 'rotate-[0deg]')}`} style={{transitionDelay: '200ms'}}>
                 <div className="flex-1">
                   <h3 className="font-syne text-2xl md:text-3xl uppercase font-black text-white group-hover:text-gaude-pink transition-colors">Narayana</h3>
                 </div>
@@ -525,10 +491,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 5: CONTACT */}
         <section id="contact" className="relative min-h-[100svh] w-full bg-gaude-pink flex flex-col justify-center p-8 md:p-16 z-50 overflow-hidden">
 
-          {/* Giant background decorative icon */}
           <div className="absolute -bottom-[10%] -right-[5%] text-[20rem] md:text-[30rem] leading-none opacity-20 pointer-events-none rotate-12 animate-[float2_8s_ease-in-out_infinite]">
             ✌️
           </div>
@@ -548,7 +512,6 @@ export default function Home() {
             </div>
 
             <div className="lg:w-1/2 flex flex-col gap-4 w-full md:max-w-md">
-              {/* Refined Contact Links */}
               <a href="mailto:deepikamundla54@gmail.com" className="group bg-white border-2 border-gaude-black px-6 md:px-8 py-5 md:py-6 flex items-center justify-between shadow-[4px_4px_0_0_#0a0a0a] hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[8px_8px_0_0_#0a0a0a] transition-all">
                 <div className="flex flex-col overflow-hidden mr-4">
                   <span className="font-inter text-xs font-bold text-gaude-black/50 uppercase tracking-widest mb-0.5">Email</span>
