@@ -38,6 +38,14 @@ export default function BeyondPage() {
 
         document.querySelectorAll('.animate-slam').forEach(el => observer.observe(el));
 
+        if (window.location.hash) {
+            setTimeout(() => {
+                const id = window.location.hash.replace('#', '');
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseover", handleMouseOver);
@@ -91,111 +99,120 @@ export default function BeyondPage() {
                         </h1>
                     </div>
                     <p className="font-syne text-lg md:text-2xl text-white/80 max-w-sm font-bold bg-white/10 p-4 border-l-4 border-white uppercase">
-                        Not just learning.<br />Building, pitching, <span className="text-gaude-orange">and proving it.</span>
+                        Not just learning. Building, shipping, and <span className="text-white bg-gaude-orange px-2 drop-shadow-md">stepping into real rooms.</span>
                     </p>
                 </div>
 
-                <div className="flex flex-col gap-16 md:gap-24 w-full relative">
+                <div className="flex flex-col gap-16 md:gap-32 w-full relative">
                     <div className="absolute left-[2rem] md:left-[3.5rem] top-[5rem] bottom-[5rem] w-1 bg-white/10 hidden md:block z-0"></div>
 
-                    <div id="slam-beyond-1" className={`bg-gaude-orange p-8 md:p-12 border-4 border-white shadow-[8px_8px_0_0_#ffffff] relative group z-10 ${getSlamClass('slam-beyond-1', 'hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[16px_16px_0_0_#ffffff]', 'rotate-[-2deg]')}`}>
+                    {/* CARD 1: HACKATHONS */}
+                    <div id="hackathons" className={`bg-gaude-orange p-8 md:p-12 border-4 border-white shadow-[8px_8px_0_0_#ffffff] relative group z-10 ${getSlamClass('hackathons', 'hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[16px_16px_0_0_#ffffff]', 'rotate-[-2deg]')}`}>
                         <div className="absolute -top-6 -right-6 text-8xl md:text-[10rem] font-archivo font-black text-white/20 select-none pointer-events-none group-hover:scale-110 transition-transform duration-500">
                             01
                         </div>
-                        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-8 relative z-10">
-                            <div>
-                                <p className="font-syne text-gaude-black font-black text-sm md:text-base uppercase tracking-widest bg-white inline-block px-2 py-1 border-2 border-gaude-black mb-3 box-shadow-sm">Pitched to IT Minister</p>
-                                <h2 className="font-archivo text-4xl md:text-5xl font-black uppercase tracking-tighter text-gaude-black drop-shadow-sm leading-none">Mumbai Tech Week</h2>
+
+                        <h2 className="font-archivo text-5xl md:text-6xl font-black uppercase text-gaude-black mb-8 border-b-4 border-gaude-black pb-4 relative z-10">Summits & Hackathons</h2>
+
+                        <div className="flex flex-col md:flex-row gap-12 font-inter text-gaude-black relative z-10">
+                            <div className="flex-1 space-y-4">
+                                <p className="font-syne font-black text-xs uppercase bg-white px-2 py-1 inline-block border-2 border-gaude-black box-shadow-sm">Pitched to IT Minister</p>
+                                <h3 className="font-archivo text-3xl font-black uppercase">Mumbai Tech Week '25</h3>
+                                <p className="text-lg font-bold">Engaged directly with founders and leaders from OYO, Meta, AWS, and Essential AI.</p>
+                                <ul className="text-sm font-bold opacity-80 list-disc ml-4 space-y-1 mt-2 mb-6">
+                                    <li>Tech is about solving real problems.</li>
+                                    <li>Great builders execute relentlessly.</li>
+                                </ul>
+                                <a href="https://www.linkedin.com/posts/deepika-mundla_mumbaitechweek-genaiclub-niatindia-activity-7317550310082625549-s0yV" target="_blank" rel="noopener noreferrer" className="bg-gaude-black text-white font-inter text-xs font-black uppercase px-4 py-2 border-2 border-white hover:bg-white hover:text-gaude-black transition-colors shadow-[4px_4px_0_0_#ffffff] hover:shadow-none translate-y-0 inline-block">
+                                    View Post ↗
+                                </a>
                             </div>
-                            <span className="font-inter text-sm md:text-base font-black text-gaude-black tracking-widest uppercase border-b-2 border-gaude-black">2025</span>
+
+                            <div className="flex-1 space-y-4 border-t-4 md:border-t-0 md:border-l-4 border-gaude-black pt-6 md:pt-0 md:pl-8">
+                                <p className="font-syne font-black text-xs uppercase bg-gaude-black text-white px-2 py-1 inline-block border-2 border-white">Top 15 Hackathon Ranking</p>
+                                <h3 className="font-archivo text-3xl font-black uppercase">AI Impact Summit '26</h3>
+                                <p className="text-lg font-bold">Selected for a national-level OpenAI hackathon and attended global AI discussions with NVIDIA & Meta.</p>
+                                <ul className="text-sm font-bold opacity-80 list-disc ml-4 space-y-1 mt-2 mb-6">
+                                    <li>Responsible AI & Policy</li>
+                                    <li>Real-world AI application building</li>
+                                </ul>
+                                <div className="flex flex-wrap gap-3">
+                                    <a href="https://www.linkedin.com/posts/deepika-mundla_indiaaiimpactsummit2026-aiforall-aiimpactsummit-activity-7430545863195705344-gCsf" target="_blank" rel="noopener noreferrer" className="bg-gaude-black text-white font-inter text-xs font-black uppercase px-4 py-2 border-2 border-white hover:bg-white hover:text-gaude-black transition-colors shadow-[4px_4px_0_0_#ffffff] hover:shadow-none inline-block">
+                                        Summit ↗
+                                    </a>
+                                    <a href="https://www.linkedin.com/posts/deepika-mundla_openaiacademyxnxtwavebuildathon-openai-nxtwave-activity-7431360086393966593-v9PJ" target="_blank" rel="noopener noreferrer" className="bg-white text-gaude-black font-inter text-xs font-black uppercase px-4 py-2 border-2 border-gaude-black hover:bg-gaude-black hover:text-white transition-colors shadow-[4px_4px_0_0_#0a0a0a] hover:shadow-none inline-block">
+                                        Hackathon ↗
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div className="space-y-6 font-inter text-lg md:text-xl font-medium text-gaude-black leading-relaxed mb-8 relative z-10">
-                            <p className="text-2xl font-black font-syne">Engaged directly with founders, investors, and leaders shaping India's tech ecosystem.</p>
-                            <p>Had meaningful conversations with leaders from companies like <strong className="font-black bg-white px-2 py-0.5 border border-gaude-black">OYO, Dream11, Meta, AWS, and Essential AI</strong> — gaining firsthand insights into how real-world products and startups are built.</p>
-                        </div>
-                        <div className="bg-gaude-black text-white p-6 md:p-8 mb-10 relative z-10 border-4 border-gaude-black">
-                            <h3 className="font-syne font-black uppercase text-sm md:text-base tracking-widest text-[#ffdb58] mb-4">Key Takeaways</h3>
-                            <ul className="space-y-3 font-inter text-sm md:text-base font-bold">
-                                <li><span className="text-gaude-orange mr-3">{'->'}</span> Tech is about solving real problems.</li>
-                                <li><span className="text-gaude-orange mr-3">{'->'}</span> Great builders execute relentlessly.</li>
-                                <li><span className="text-gaude-orange mr-3">{'->'}</span> Opportunities are created, not waited for.</li>
-                            </ul>
-                        </div>
-                        <a href="https://www.linkedin.com/posts/deepika-mundla_mumbaitechweek-genaiclub-niatindia-activity-7317550310082625549-s0yV" target="_blank" rel="noopener noreferrer" className="relative z-10 font-archivo text-sm md:text-base font-black uppercase tracking-widest text-gaude-black bg-white px-6 py-4 border-4 border-gaude-black hover:bg-gaude-black hover:text-white transition-colors shadow-[4px_4px_0_0_#0a0a0a] hover:shadow-none inline-flex items-center gap-2">
-                            View Experience <span className="text-xl">↗</span>
-                        </a>
                     </div>
 
-                    <div id="slam-beyond-2" className={`bg-[#4dadea] p-8 md:p-12 border-4 border-white shadow-[8px_8px_0_0_#ffffff] relative group z-10 ${getSlamClass('slam-beyond-2', 'hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[16px_16px_0_0_#ffffff]', 'rotate-[1deg]')}`}>
+                    {/* CARD 2: EDITCO.MEDIA */}
+                    <div id="editco" className={`bg-[#c3a4f6] p-8 md:p-12 border-4 border-white shadow-[8px_8px_0_0_#ffffff] relative group z-10 ${getSlamClass('editco', 'hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[16px_16px_0_0_#ffffff]', 'rotate-[1deg]')}`}>
                         <div className="absolute -top-6 -right-6 text-8xl md:text-[10rem] font-archivo font-black text-white/20 select-none pointer-events-none group-hover:scale-110 transition-transform duration-500">
                             02
                         </div>
-                        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-8 relative z-10">
-                            <div>
-                                <p className="font-syne text-white font-black text-sm md:text-base uppercase tracking-widest bg-gaude-black inline-block px-2 py-1 mb-3">OpenAI x NxtWave</p>
-                                <h2 className="font-archivo text-4xl md:text-5xl font-black uppercase tracking-tighter text-gaude-black drop-shadow-sm leading-none">AI Impact Summit</h2>
+
+                        <h2 className="font-archivo text-5xl md:text-6xl font-black uppercase text-gaude-black mb-8 border-b-4 border-gaude-black pb-4 relative z-10">Building Editco.Media</h2>
+
+                        <div className="font-inter text-lg md:text-xl text-gaude-black font-medium leading-relaxed max-w-4xl space-y-6 relative z-10">
+                            <p className="font-syne text-2xl md:text-3xl font-black leading-tight border-l-4 border-gaude-black pl-4 py-1">
+                                Started with a simple idea — most brands fail because they lack systems, not effort.
+                            </p>
+                            <p className="bg-white/40 p-4 border-2 border-gaude-black">
+                                We build automation systems, clean websites, and cross-platform apps (Flutter & React Native) that actually help businesses streamline and grow. It’s not just about content creation—it's about building a digital infrastructure.
+                            </p>
+                            <div className="bg-gaude-black text-white p-6 md:p-8 border-4 border-gaude-black shadow-[8px_8px_0_0_#ffffff] mt-6 transform rotate-1">
+                                <h3 className="font-archivo text-[#c3a4f6] font-black uppercase text-xl md:text-2xl mb-3">What I Do</h3>
+                                <p className="text-base font-bold opacity-90">
+                                    I work across the technical side—designing interfaces, setting up workflows, and building mobile and web apps. It's about pushing beyond just writing code and actually connecting with what users need, delivering solutions that are built for real people.
+                                </p>
                             </div>
-                            <div className="flex flex-col md:items-end gap-1">
-                                <span className="font-inter text-xs font-black text-gaude-black tracking-widest uppercase border border-gaude-black px-2 py-0.5">Top 15 Ranking</span>
-                                <span className="font-inter text-sm md:text-base font-black text-gaude-black tracking-widest uppercase border-b-2 border-gaude-black mt-2">Delhi, 2026</span>
+                            <div className="mt-8 flex">
+                                <a href="https://editcomedia.com" target="_blank" rel="noopener noreferrer" className="bg-white text-gaude-black font-archivo text-xl font-black uppercase px-8 py-4 border-4 border-gaude-black shadow-[4px_4px_0_0_#0a0a0a] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                                    → View editcomedia.com
+                                </a>
                             </div>
-                        </div>
-                        <div className="space-y-6 font-inter text-lg md:text-xl font-medium text-gaude-black leading-relaxed mb-8 relative z-10">
-                            <p className="text-2xl font-black font-syne">Selected for a national-level hackathon with OpenAI & ranked Top 15.</p>
-                            <p>Attended the AI Impact Summit, where global leaders from <strong className="font-black bg-white px-2 py-0.5 border border-gaude-black">OpenAI, Google, Microsoft, NVIDIA, and Meta</strong> discussed the future of artificial intelligence.</p>
-                        </div>
-                        <div className="bg-white border-4 border-gaude-black p-6 md:p-8 mb-10 relative z-10">
-                            <h3 className="font-syne font-black uppercase text-sm md:text-base tracking-widest text-[#4dadea] mb-6">Exposure Gained</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-inter text-sm md:text-base font-bold text-gaude-black">
-                                <div className="flex items-center gap-3"><span className="text-[#4dadea] font-black text-2xl">01.</span> Responsible AI</div>
-                                <div className="flex items-center gap-3"><span className="text-[#4dadea] font-black text-2xl">02.</span> Policy & Governance</div>
-                                <div className="flex items-center gap-3"><span className="text-[#4dadea] font-black text-2xl">03.</span> Real-world Apps</div>
-                            </div>
-                        </div>
-                        <div className="flex flex-wrap gap-4 relative z-10">
-                            <a href="https://www.linkedin.com/posts/deepika-mundla_indiaaiimpactsummit2026-aiforall-aiimpactsummit-activity-7430545863195705344-gCsf" target="_blank" rel="noopener noreferrer" className="font-archivo text-sm md:text-base font-black uppercase tracking-widest text-white bg-gaude-black px-6 py-4 border-4 border-gaude-black hover:bg-white hover:text-gaude-black transition-colors shadow-[4px_4px_0_0_#0a0a0a] hover:shadow-none inline-flex items-center gap-2">
-                                View Summit <span className="text-xl">↗</span>
-                            </a>
-                            <a href="https://www.linkedin.com/posts/deepika-mundla_openaiacademyxnxtwavebuildathon-openai-nxtwave-activity-7431360086393966593-v9PJ" target="_blank" rel="noopener noreferrer" className="font-archivo text-sm md:text-base font-black uppercase tracking-widest text-gaude-black bg-white px-6 py-4 border-4 border-gaude-black hover:bg-gaude-black hover:text-white transition-colors shadow-[4px_4px_0_0_#0a0a0a] hover:shadow-none inline-flex items-center gap-2">
-                                Hackathon Top 15 <span className="text-xl">↗</span>
-                            </a>
                         </div>
                     </div>
 
-                    <div id="slam-beyond-3" className={`bg-gaude-purple p-8 md:p-12 border-4 border-white shadow-[8px_8px_0_0_#ffffff] relative group z-10 ${getSlamClass('slam-beyond-3', 'hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[16px_16px_0_0_#ffffff]', 'rotate-[-3deg]')}`}>
+                    {/* CARD 3: EXPERIENCE */}
+                    <div id="experience" className={`bg-[#36df93] p-8 md:p-12 border-4 border-white shadow-[8px_8px_0_0_#ffffff] relative group z-10 ${getSlamClass('experience', 'hover:-translate-y-2 hover:-translate-x-1 hover:shadow-[16px_16px_0_0_#ffffff]', 'rotate-[-2deg]')}`}>
                         <div className="absolute -top-6 -right-6 text-8xl md:text-[10rem] font-archivo font-black text-white/20 select-none pointer-events-none group-hover:scale-110 transition-transform duration-500">
                             03
                         </div>
-                        <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-8 relative z-10">
-                            <div>
-                                <p className="font-syne text-white font-black text-sm md:text-base uppercase tracking-widest bg-gaude-orange inline-block px-2 py-1 border-2 border-gaude-black mb-3">NxtWave</p>
-                                <h2 className="font-archivo text-4xl md:text-5xl font-black uppercase tracking-tighter text-gaude-black drop-shadow-sm leading-none">Backend Intern</h2>
-                            </div>
-                            <span className="font-inter text-sm md:text-base font-black text-gaude-black tracking-widest uppercase border-b-2 border-gaude-black">Production</span>
-                        </div>
-                        <div className="space-y-6 font-inter text-lg md:text-xl font-medium text-gaude-black leading-relaxed mb-8 relative z-10">
-                            <p className="text-2xl font-black font-syne">Worked on real production codebases with active users.</p>
-                            <p>Handling systems where performance, reliability, and correctness directly matter.</p>
-                        </div>
-                        <div className="flex flex-col md:flex-row gap-6 relative z-10 mb-8">
-                            <div className="w-full md:w-1/2 bg-white border-4 border-gaude-black p-6 md:p-8">
-                                <h3 className="font-archivo font-black uppercase text-xl mb-4 text-gaude-orange">Core Backend</h3>
-                                <ul className="space-y-3 font-inter text-sm md:text-base font-bold text-gaude-black">
-                                    <li><span className="text-gaude-orange mr-2">{'//'}</span> Debugging API failures.</li>
-                                    <li><span className="text-gaude-orange mr-2">{'//'}</span> Improving response delays.</li>
-                                    <li><span className="text-gaude-orange mr-2">{'//'}</span> Writing structured code.</li>
+
+                        <h2 className="font-archivo text-5xl md:text-6xl font-black uppercase text-gaude-black mb-8 border-b-4 border-gaude-black pb-4 relative z-10">Production Experience</h2>
+
+                        <div className="flex flex-col gap-10 font-inter text-gaude-black relative z-10 w-full max-w-4xl mx-auto">
+                            {/* NxtWave Block */}
+                            <div className="bg-white p-6 md:p-8 border-4 border-gaude-black shadow-[8px_8px_0_0_#0a0a0a]">
+                                <div className="mb-6 border-b-2 border-gaude-black pb-4">
+                                    <p className="font-syne font-black text-sm uppercase text-gaude-black tracking-widest mb-1 bg-gaude-orange px-2 py-1 inline-block border-2 border-gaude-black">NxtWave</p>
+                                    <h3 className="font-archivo text-3xl md:text-4xl font-black uppercase tracking-tight mt-2">Backend Intern</h3>
+                                </div>
+                                <p className="text-xl font-bold mb-6 font-syne border-l-4 border-gaude-purple pl-4 text-gaude-black/90">Writing and debugging real production codebases used by active users.</p>
+                                <ul className="text-base font-bold opacity-80 space-y-3 ml-6 list-disc">
+                                    <li>Resolving API failures & improving response delays.</li>
+                                    <li>Writing structured, highly robust backend logic.</li>
+                                    <li>Expanded into Full-Stack to understand React Native/Flutter integration.</li>
                                 </ul>
                             </div>
-                            <div className="w-full md:w-1/2 bg-gaude-black text-white border-4 border-gaude-black p-6 md:p-8">
-                                <h3 className="font-archivo font-black uppercase text-xl mb-4 text-[#c3a4f6]">Full-Stack Expansion</h3>
-                                <p className="font-inter text-sm md:text-base font-bold">Learned and built with React Native and Flutter during the internship to understand end-to-end integration.</p>
+
+                            {/* GenAI Block */}
+                            <div className="bg-white p-6 md:p-8 border-4 border-gaude-black shadow-[8px_8px_0_0_#0a0a0a]">
+                                <div className="mb-6 border-b-2 border-gaude-black pb-4">
+                                    <p className="font-syne font-black text-sm uppercase text-gaude-black tracking-widest mb-1 bg-[#c3a4f6] px-2 py-1 inline-block border-2 border-gaude-black">GenAI Club</p>
+                                    <h3 className="font-archivo text-3xl md:text-4xl font-black uppercase tracking-tight mt-2">Social Media Manager</h3>
+                                </div>
+                                <p className="text-xl font-bold mb-6 font-syne border-l-4 border-gaude-purple pl-4 text-gaude-black/90">Managing the voice, community, and outreach for a growing tech club.</p>
+                                <ul className="text-base font-bold opacity-80 space-y-3 ml-6 list-disc">
+                                    <li>Handled social media strategy and consistent community content.</li>
+                                    <li>Organized hackathons and technical workshops for students.</li>
+                                    <li>Taught complex AI concepts in accessible formats.</li>
+                                </ul>
                             </div>
-                        </div>
-                        <div className="relative z-10 pt-6 border-t-4 border-gaude-black">
-                            <p className="font-archivo text-2xl md:text-4xl uppercase font-black tracking-tighter text-gaude-black">
-                                Shifted from learning code<br />
-                                <span className="text-white bg-gaude-black px-2 mt-2 inline-block shadow-[4px_4px_0_0_#ffffff]">to building systems that run.</span>
-                            </p>
                         </div>
                     </div>
 

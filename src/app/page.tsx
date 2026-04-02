@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -186,11 +188,12 @@ export default function Home() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-gaude-purple/10 to-transparent animate-[pulse-glow_6s_ease-in-out_infinite] pointer-events-none"></div>
 
           <div className="relative w-full max-w-6xl aspect-square md:aspect-[21/9]">
-            <div className={`absolute top-[4%] md:top-[5%] left-[2%] md:left-[12%] w-[90%] md:w-[48%] ${activeCard === 1 ? 'z-50' : 'z-10'}`}>
+            <div className={`absolute top-[0%] md:top-[0%] left-[2%] md:left-[12%] w-[90%] md:w-[48%] ${activeCard === 1 ? 'z-50' : 'z-10'}`}>
               <div
                 onClick={() => setActiveCard(1)}
-                className="bg-white p-6 md:p-8 rotate-[-2deg] shadow-2xl border border-neutral-200 transition-all duration-500 hover:scale-[1.02] hover:rotate-[-1deg] cursor-pointer h-full border-b-[6px] border-r-[6px] border-gaude-black">
-                <h2 className="font-archivo text-4xl md:text-[3.5rem] leading-[0.8] text-gaude-black tracking-tighter uppercase">
+                className="relative bg-white p-6 md:p-8 rotate-[-2deg] shadow-2xl border border-neutral-200 transition-all duration-500 hover:scale-[1.02] hover:rotate-[-1deg] cursor-pointer h-full border-b-[6px] border-r-[6px] border-gaude-black">
+                <button onClick={(e) => { e.stopPropagation(); router.push('/beyond#experience'); }} className="absolute top-4 right-4 md:top-6 md:right-6 font-archivo text-[10px] md:text-xs font-black uppercase tracking-widest text-white bg-gaude-black px-3 py-2 hover:bg-gaude-orange transition-colors border-2 border-transparent hover:border-gaude-black shadow-[2px_2px_0_0_#0a0a0a] hover:shadow-none hover:translate-y-1 hover:translate-x-1 outline-none">View More ↗</button>
+                <h2 className="font-archivo text-4xl md:text-[3.5rem] leading-[0.8] text-gaude-black tracking-tighter uppercase pr-20">
                   Backend<br />Intern
                 </h2>
                 <div className="mt-4 md:mt-5 border-2 border-gaude-black p-1 md:p-2 font-inter text-[10px] md:text-xs text-gaude-black font-bold uppercase inline-block">
@@ -205,11 +208,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={`absolute top-[38%] md:top-[45%] left-0 md:left-[5%] w-[85%] md:w-[42%] ${activeCard === 2 ? 'z-50' : 'z-20'}`}>
+            <div className={`absolute top-[30%] md:top-[35%] left-0 md:left-[5%] w-[85%] md:w-[42%] ${activeCard === 2 ? 'z-50' : 'z-20'}`}>
               <div
                 onClick={() => setActiveCard(2)}
-                className="bg-gaude-purple p-6 md:p-8 rotate-[3deg] shadow-[0_20px_50px_rgba(195,164,246,0.3)] transition-all duration-500 hover:scale-[1.02] hover:rotate-[1deg] cursor-pointer h-full border-b-[6px] border-r-[6px] border-gaude-black">
-                <h3 className="font-inter font-black text-3xl md:text-[3rem] text-gaude-black tracking-tighter mb-4 leading-none">
+                className="relative bg-gaude-purple p-6 md:p-8 rotate-[3deg] shadow-[0_20px_50px_rgba(195,164,246,0.3)] transition-all duration-500 hover:scale-[1.02] hover:rotate-[1deg] cursor-pointer h-full border-b-[6px] border-r-[6px] border-gaude-black">
+                <button onClick={(e) => { e.stopPropagation(); router.push('/beyond#editco'); }} className="absolute top-4 right-4 md:top-6 md:right-6 font-archivo text-[10px] md:text-xs font-black uppercase tracking-widest text-gaude-black bg-white px-3 py-2 hover:bg-gaude-black hover:text-white transition-colors border-2 border-gaude-black shadow-[2px_2px_0_0_#0a0a0a] hover:shadow-none hover:translate-y-1 hover:translate-x-1 outline-none">View More ↗</button>
+                <h3 className="font-inter font-black text-3xl md:text-[3rem] text-gaude-black tracking-tighter mb-4 leading-none pr-20">
                   Co-Founder
                 </h3>
                 <div className="text-[10px] md:text-[11px] lg:text-xs text-gaude-black font-inter leading-relaxed mb-4 space-y-3">
@@ -230,11 +234,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={`absolute top-[55%] md:top-[25%] right-0 md:right-[5%] w-[85%] md:w-[42%] ${activeCard === 3 ? 'z-50' : 'z-30'}`}>
+            <div className={`absolute top-[48%] md:top-[15%] right-0 md:right-[5%] w-[85%] md:w-[42%] ${activeCard === 3 ? 'z-50' : 'z-30'}`}>
               <div
                 onClick={() => setActiveCard(3)}
-                className="bg-gaude-orange p-6 md:p-8 rotate-[-1deg] shadow-[0_20px_50px_rgba(255,78,0,0.3)] transition-all duration-500 hover:scale-[1.02] hover:rotate-0 cursor-pointer h-full border-b-[6px] border-r-[6px] border-white">
-                <div className="flex justify-between items-end font-inter text-[10px] md:text-xs font-bold text-white uppercase mb-5 border-b border-white/30 pb-2">
+                className="relative bg-gaude-orange p-6 md:p-8 rotate-[-1deg] shadow-[0_20px_50px_rgba(255,78,0,0.3)] transition-all duration-500 hover:scale-[1.02] hover:rotate-0 cursor-pointer h-full border-b-[6px] border-r-[6px] border-white">
+                <button onClick={(e) => { e.stopPropagation(); router.push('/beyond#experience'); }} className="absolute top-4 right-4 md:top-6 md:right-6 font-archivo text-[10px] md:text-xs font-black uppercase tracking-widest text-gaude-orange bg-white px-3 py-2 hover:bg-gaude-black hover:text-white transition-colors border-2 border-white shadow-[2px_2px_0_0_#ffffff] hover:shadow-none hover:translate-y-1 hover:translate-x-1 outline-none">View More ↗</button>
+                <div className="flex justify-between items-end font-inter text-[10px] md:text-xs font-bold text-white uppercase mb-5 border-b border-white/30 pb-2 pr-20">
                   <span className="text-sm md:text-base">Social Media<br />Manager</span>
                   <span>#Community</span>
                 </div>
